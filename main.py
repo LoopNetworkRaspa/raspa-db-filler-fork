@@ -5,11 +5,14 @@ import threading
 import time
 
 from BlocksProcessor import BlocksProcessor
-from TxAddrMappingUpdater import TxAddrMappingUpdater
-from VirtualChainProcessor import VirtualChainProcessor
 from dbsession import create_all
 from helper import KeyValueStore
 from kaspad.KaspadMultiClient import KaspadMultiClient
+from TxAddrMappingUpdater import TxAddrMappingUpdater
+from VirtualChainProcessor import VirtualChainProcessor
+
+NODE_RPC_URI = os.getenv("NODE_RPC_URI")
+DROP_SQL_DB = os.getenv("DROP_SQL_DB") == "true"
 
 logging.basicConfig(format="%(asctime)s::%(levelname)s::%(name)s::%(message)s",
                     level=logging.DEBUG if os.getenv("DEBUG", False) else logging.INFO,
@@ -26,9 +29,9 @@ _logger = logging.getLogger(__name__)
 
 # create tables in database
 _logger.info('Creating DBs if not exist.')
-create_all(drop=False)
+create_all(drop=DROP_SQL_DB)
 
-kaspad_hosts = []
+kaspad_hosts = [NODE_RPC_URI]
 
 for i in range(100):
     try:
