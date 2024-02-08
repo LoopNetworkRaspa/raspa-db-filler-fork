@@ -4,10 +4,11 @@ ARG REPO_DIR
 
 EXPOSE 8000
 
-ENV KASPAD_HOST_1=n.seeder1.kaspad.net:16110
-ENV SQL_URI=postgresql+asyncpg://postgres:password@postgresql:5432/postgres
-ARG version
-ENV VERSION=$version
+# ENV KASPAD_HOST_1=localhost:16510
+# ENV SQL_URI=postgresql://postgres:postgres@127.0.0.1:5432/postgres
+# ARG version
+# ENV VERSION=$version
+ENV VERSION=0.0.1
 
 RUN apk --no-cache add \
   git \
